@@ -1,1 +1,1 @@
-a
+coin-clicker.github.io
