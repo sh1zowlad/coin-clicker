@@ -53,10 +53,24 @@
 
     <script>
         let count = 0;
+        const userId = 'user123'; // Replace with dynamic user ID
 
         function incrementCounter() {
             count++;
             document.getElementById('counter').innerText = count;
+            saveData(count);
+        }
+
+        function saveData(clicks) {
+            fetch('https://your-flask-server.herokuapp.com/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_id: userId, clicks: clicks })
+            }).then(response => response.json())
+              .then(data => console.log(data))
+              .catch(error => console.error('Error:', error));
         }
     </script>
 </body>
