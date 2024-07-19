@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,6 +26,8 @@
             font-size: 50px;
             cursor: pointer;
             color: #ff8c00; /* Оранжевый цвет */
+            user-select: none; /* Запрещает выделение текста */
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
         }
         .counter {
             font-size: 24px;
@@ -64,6 +66,14 @@
         let count = 0;
         const userId = 'user123'; // Replace with dynamic user ID
 
+        // Load the saved count from localStorage
+        window.onload = function() {
+            if (localStorage.getItem('coinCount')) {
+                count = parseInt(localStorage.getItem('coinCount'));
+                document.getElementById('counter').innerText = count;
+            }
+        };
+
         function incrementCounter() {
             count++;
             document.getElementById('counter').innerText = count;
@@ -71,6 +81,9 @@
         }
 
         function saveData(clicks) {
+            // Save the count to localStorage
+            localStorage.setItem('coinCount', clicks);
+
             fetch('https://your-flask-server.herokuapp.com/save', {
                 method: 'POST',
                 headers: {
