@@ -4,7 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coin Clicker</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff; /* Белый фон */
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .coin {
+            font-size: 50px;
+            cursor: pointer;
+            color: #ff8c00; /* Оранжевый цвет */
+        }
+        .counter {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #ff8c00; /* Оранжевый цвет */
+        }
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff8c00; /* Оранжевый цвет */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #e67e00; /* Более темный оранжевый цвет при наведении */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
