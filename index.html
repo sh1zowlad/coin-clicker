@@ -5,21 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coin Clicker</title>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #ff4e50, #f9d423); /* Красно-желтый градиент */
-            background-size: 200% 200%; /* Увеличиваем размер фона для анимации */
-            animation: gradientAnimation 15s ease infinite; /* Анимация градиента */
-            overflow: hidden; /* Отключает прокрутку */
+        html, body {
+            height: 100%; /* Устанавливаем высоту для полного заполнения */
+            margin: 0; /* Убираем отступы */
+            overflow: hidden; /* Отключаем прокрутку */
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
             user-select: none; /* Запрещает выделение текста */
             -webkit-user-select: none; /* Запрещает выделение текста в WebKit-браузерах */
             -ms-user-select: none; /* Запрещает выделение текста в IE и Edge */
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff4e50, #f9d423); /* Красно-желтый градиент */
+            background-size: 200% 200%; /* Увеличиваем размер фона для анимации */
+            animation: gradientAnimation 15s ease infinite; /* Анимация градиента */
+            font-family: Arial, sans-serif;
         }
 
         @keyframes gradientAnimation {
