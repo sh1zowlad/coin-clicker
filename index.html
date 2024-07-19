@@ -33,6 +33,9 @@
             font-size: 24px;
             margin-top: 20px;
             color: #ff8c00; /* Оранжевый цвет */
+            white-space: nowrap; /* Запрещает перенос текста на новую строку */
+            overflow: hidden; /* Скрывает текст, выходящий за пределы контейнера */
+            text-overflow: ellipsis; /* Добавляет многоточие в конце */
         }
         .button {
             display: inline-block;
@@ -70,13 +73,13 @@
         window.onload = function() {
             if (localStorage.getItem('coinCount')) {
                 count = parseInt(localStorage.getItem('coinCount'));
-                document.getElementById('counter').innerText = count;
+                document.getElementById('counter').innerText = formatNumber(count);
             }
         };
 
         function incrementCounter() {
             count += 200000; // Увеличиваем количество монет на 200000
-            document.getElementById('counter').innerText = count;
+            document.getElementById('counter').innerText = formatNumber(count);
             saveData(count);
         }
 
@@ -94,6 +97,18 @@
             }).then(response => response.json())
               .then(data => console.log(data))
               .catch(error => console.error('Error:', error));
+        }
+
+        function formatNumber(num) {
+            if (num >= 1e9) {
+                return (num / 1e9).toFixed(1) + 'B';
+            } else if (num >= 1e6) {
+                return (num / 1e6).toFixed(1) + 'M';
+            } else if (num >= 1e3) {
+                return (num / 1e3).toFixed(1) + 'K';
+            } else {
+                return num;
+            }
         }
     </script>
 </body>
