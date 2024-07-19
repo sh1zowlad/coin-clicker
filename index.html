@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -66,7 +66,7 @@
         let count = 0;
         const userId = 'user123'; // Replace with dynamic user ID
 
-        // Load the saved count from localStorage
+        // Load the saved count from localStorage when the window loads
         window.onload = function() {
             if (localStorage.getItem('coinCount')) {
                 count = parseInt(localStorage.getItem('coinCount'));
@@ -84,6 +84,7 @@
             // Save the count to localStorage
             localStorage.setItem('coinCount', clicks);
 
+            // Optional: Save the count to your server
             fetch('https://your-flask-server.herokuapp.com/save', {
                 method: 'POST',
                 headers: {
