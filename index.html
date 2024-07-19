@@ -10,11 +10,17 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #ff4e50, #f9d423); /* Красно-желтый градиент */
+            background: linear-gradient(135deg, #ffecd2, #fcb69f); /* Пастельный градиент */
+            background-size: 400% 400%; /* Увеличиваем размер фона для анимации */
+            animation: gradientAnimation 10s ease infinite; /* Анимация градиента */
             font-family: Arial, sans-serif;
             margin: 0;
-            overflow: hidden; /* Отключает прокрутку */
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
+        }
+        @keyframes gradientAnimation {
+            0% { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
+            50% { background: linear-gradient(135deg, #fcb69f, #ffecd2); }
+            100% { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
         }
         .container {
             position: relative;
@@ -23,7 +29,6 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 1;
         }
         .coin {
             font-size: 50px;
@@ -32,10 +37,6 @@
             user-select: none; /* Запрещает выделение текста */
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
             transition: transform 0.2s ease; /* Плавная анимация при нажатии */
-            position: relative;
-            padding: 10px;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(255, 140, 0, 0.7), 0 0 20px rgba(255, 140, 0, 0.5);
         }
         .coin:active {
             transform: scale(1.1); /* Увеличение монетки при нажатии */
@@ -67,7 +68,6 @@
         .button:focus {
             outline: none; /* Удаление outline при фокусе */
         }
-
         .background-coin {
             position: absolute;
             font-size: 30px;
@@ -75,7 +75,6 @@
             user-select: none; /* Запрещает выделение текста */
             animation: float 10s ease-in-out infinite; /* Плавная анимация */
         }
-
         @keyframes float {
             0% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
@@ -93,12 +92,6 @@
     <script>
         let count = 0;
         const userId = 'user123'; // Replace with dynamic user ID
-
-        // Check if the reset flag is set
-        if (!localStorage.getItem('resetDone')) {
-            localStorage.clear(); // Clear localStorage
-            localStorage.setItem('resetDone', 'true'); // Set the reset flag
-        }
 
         // Load the saved count from localStorage when the window loads
         window.onload = function() {
