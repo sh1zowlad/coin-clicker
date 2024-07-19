@@ -12,16 +12,19 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #ffecd2, #fcb69f); /* Пастельный градиент */
-            background-size: 400% 400%; /* Увеличиваем размер фона для анимации */
-            animation: gradientAnimation 10s ease infinite; /* Анимация градиента */
+            background: linear-gradient(135deg, #ff4e50, #f9d423); /* Красно-желтый градиент */
+            background-size: 200% 200%; /* Увеличиваем размер фона для анимации */
+            animation: gradientAnimation 15s ease infinite; /* Анимация градиента */
+            overflow: hidden; /* Отключает прокрутку */
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
         }
+
         @keyframes gradientAnimation {
-            0% { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
-            50% { background: linear-gradient(135deg, #fcb69f, #ffecd2); }
-            100% { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
         }
+
         .container {
             position: relative;
             text-align: center;
@@ -29,8 +32,9 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 1; /* Чтобы контейнер был поверх фоновых монеток */
+            z-index: 1;
         }
+
         .coin {
             font-size: 50px;
             cursor: pointer;
@@ -39,17 +43,23 @@
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
             transition: transform 0.2s ease; /* Плавная анимация при нажатии */
         }
+
         .coin:active {
             transform: scale(1.1); /* Увеличение монетки при нажатии */
         }
+
         .counter {
             font-size: 24px;
             margin-top: 20px;
             color: #ff8c00; /* Оранжевый цвет */
+            white-space: nowrap; /* Запрещает перенос текста на новую строку */
+            overflow: hidden; /* Скрывает текст, выходящий за пределы контейнера */
+            text-overflow: ellipsis; /* Сокращение текста с многоточием */
             border: 2px solid black; /* Черная рамка вокруг счётчика */
             padding: 10px;
             border-radius: 5px;
         }
+
         .button {
             display: inline-block;
             margin-top: 20px;
@@ -63,12 +73,15 @@
             outline: none; /* Удаление outline */
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
         }
+
         .button:hover {
             background-color: #e67e00; /* Более темный оранжевый цвет при наведении */
         }
+
         .button:focus {
             outline: none; /* Удаление outline при фокусе */
         }
+
         .background-coin {
             position: absolute;
             font-size: 30px;
@@ -76,6 +89,7 @@
             user-select: none; /* Запрещает выделение текста */
             animation: float 10s ease-in-out infinite; /* Плавная анимация */
         }
+
         @keyframes float {
             0% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
@@ -93,6 +107,12 @@
     <script>
         let count = 0;
         const userId = 'user123'; // Замените на динамический user ID
+
+        // Проверка флага сброса
+        if (!localStorage.getItem('resetDone')) {
+            localStorage.clear(); // Очистка localStorage
+            localStorage.setItem('resetDone', 'true'); // Установка флага сброса
+        }
 
         // Загрузка сохраненного количества из localStorage при загрузке страницы
         window.onload = function() {
@@ -141,7 +161,7 @@
 
         function createBackgroundCoins() {
             const body = document.body;
-            const numCoins = 50; // Количество монеток на фоне
+            const numCoins = 100; // Количество монеток на фоне
 
             for (let i = 0; i < numCoins; i++) {
                 const coin = document.createElement('div');
