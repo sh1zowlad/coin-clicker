@@ -10,7 +10,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #ffecd2, #fcb69f); /* Пастельный градиент */
+            background: linear-gradient(135deg, #ff4e50, #f9d423); /* Красно-желтый градиент */
             font-family: Arial, sans-serif;
             margin: 0;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
@@ -28,6 +28,7 @@
             color: #ff8c00; /* Оранжевый цвет */
             user-select: none; /* Запрещает выделение текста */
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
+            animation: spin 1s infinite; /* Анимация вращения */
         }
         .counter {
             font-size: 24px;
@@ -35,7 +36,7 @@
             color: #ff8c00; /* Оранжевый цвет */
             white-space: nowrap; /* Запрещает перенос текста на новую строку */
             overflow: hidden; /* Скрывает текст, выходящий за пределы контейнера */
-            text-overflow: ellipsis; /* Добавляет многоточие в конце */
+            text-overflow: ellipsis; /* Сокращение текста с многоточием */
         }
         .button {
             display: inline-block;
@@ -56,6 +57,11 @@
         .button:focus {
             outline: none; /* Удаление outline при фокусе */
         }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -66,8 +72,14 @@
     </div>
 
     <script>
-        let count += 1;
+        let count = 0;
         const userId = 'user123'; // Replace with dynamic user ID
+
+        // Check if the reset flag is set
+        if (!localStorage.getItem('resetDone')) {
+            localStorage.clear(); // Clear localStorage
+            localStorage.setItem('resetDone', 'true'); // Set the reset flag
+        }
 
         // Load the saved count from localStorage when the window loads
         window.onload = function() {
@@ -78,7 +90,7 @@
         };
 
         function incrementCounter() {
-            count += 1; // Увеличиваем количество монет на 200000
+            count++; // Increment by 1
             document.getElementById('counter').innerText = formatNumber(count);
             saveData(count);
         }
@@ -100,14 +112,16 @@
         }
 
         function formatNumber(num) {
-            if (num >= 1e9) {
-                return (num / 1e9).toFixed(1) + 'B';
+            if (num >= 1e12) {
+                return (num / 1e12).toFixed(2) + 'T';
+            } else if (num >= 1e9) {
+                return (num / 1e9).toFixed(2) + 'B';
             } else if (num >= 1e6) {
-                return (num / 1e6).toFixed(1) + 'M';
+                return (num / 1e6).toFixed(2) + 'M';
             } else if (num >= 1e3) {
-                return (num / 1e3).toFixed(1) + 'K';
+                return (num / 1e3).toFixed(2) + 'K';
             } else {
-                return num;
+                return num.toString();
             }
         }
     </script>
