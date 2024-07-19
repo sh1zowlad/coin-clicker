@@ -10,11 +10,11 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #ffecd2, #fcb69f); /* Пастельный градиент */
             background-size: 400% 400%; /* Увеличиваем размер фона для анимации */
             animation: gradientAnimation 10s ease infinite; /* Анимация градиента */
-            font-family: Arial, sans-serif;
-            margin: 0;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
         }
         @keyframes gradientAnimation {
@@ -29,6 +29,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1; /* Чтобы контейнер был поверх фоновых монеток */
         }
         .coin {
             font-size: 50px;
@@ -91,28 +92,28 @@
 
     <script>
         let count = 0;
-        const userId = 'user123'; // Replace with dynamic user ID
+        const userId = 'user123'; // Замените на динамический user ID
 
-        // Load the saved count from localStorage when the window loads
+        // Загрузка сохраненного количества из localStorage при загрузке страницы
         window.onload = function() {
             if (localStorage.getItem('coinCount')) {
                 count = parseInt(localStorage.getItem('coinCount'));
                 document.getElementById('counter').innerText = formatNumber(count);
             }
-            createBackgroundCoins(); // Создаем монетки на фоне
+            createBackgroundCoins(); // Создание монеток на фоне
         };
 
         function incrementCounter() {
-            count++; // Increment by 1
+            count++; // Увеличение на 1
             document.getElementById('counter').innerText = formatNumber(count);
             saveData(count);
         }
 
         function saveData(clicks) {
-            // Save the count to localStorage
+            // Сохранение количества в localStorage
             localStorage.setItem('coinCount', clicks);
 
-            // Optional: Save the count to your server
+            // Опционально: Сохранение количества на сервере
             fetch('https://your-flask-server.herokuapp.com/save', {
                 method: 'POST',
                 headers: {
