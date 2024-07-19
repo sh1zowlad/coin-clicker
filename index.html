@@ -17,6 +17,9 @@
             animation: gradientAnimation 15s ease infinite; /* Анимация градиента */
             overflow: hidden; /* Отключает прокрутку */
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
+            user-select: none; /* Запрещает выделение текста */
+            -webkit-user-select: none; /* Запрещает выделение текста в WebKit-браузерах */
+            -ms-user-select: none; /* Запрещает выделение текста в IE и Edge */
         }
 
         @keyframes gradientAnimation {
@@ -39,8 +42,6 @@
             font-size: 50px;
             cursor: pointer;
             color: #ff8c00; /* Оранжевый цвет */
-            user-select: none; /* Запрещает выделение текста */
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
             transition: transform 0.2s ease; /* Плавная анимация при нажатии */
         }
 
@@ -71,22 +72,16 @@
             cursor: pointer;
             text-decoration: none;
             outline: none; /* Удаление outline */
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
         }
 
         .button:hover {
             background-color: #e67e00; /* Более темный оранжевый цвет при наведении */
         }
 
-        .button:focus {
-            outline: none; /* Удаление outline при фокусе */
-        }
-
         .background-coin {
             position: absolute;
             font-size: 30px;
             color: rgba(255, 140, 0, 0.5); /* Полупрозрачный оранжевый цвет */
-            user-select: none; /* Запрещает выделение текста */
             animation: float 10s ease-in-out infinite; /* Плавная анимация */
         }
 
