@@ -53,21 +53,19 @@
         }
 
         .counter-container {
-            background: linear-gradient(135deg, #9c27b0, #f48fb1); /* Фиолетово-светло-розовый градиент */
+            background: linear-gradient(135deg, #9c27b0, #ff4081); /* Фиолетово-кислотно-розовый градиент */
             background-size: 200% 200%; /* Увеличиваем размер фона для анимации */
             animation: gradientAnimation 15s ease infinite; /* Анимация градиента */
             padding: 10px;
             border-radius: 5px;
             display: inline-block;
             margin: 20px 0; /* Отступы сверху и снизу для расстояния */
+            position: relative; /* Чтобы разместить контейнер по центру */
         }
 
         .counter {
             font-size: 24px;
             color: white; /* Цвет текста на фоне градиента */
-            white-space: nowrap; /* Запрещает перенос текста на новую строку */
-            overflow: hidden; /* Скрывает текст, выходящий за пределы контейнера */
-            text-overflow: ellipsis; /* Сокращение текста с многоточием */
         }
 
         .button {
@@ -84,6 +82,10 @@
 
         .button:hover {
             background-color: #e67e00; /* Более темный оранжевый цвет при наведении */
+        }
+
+        .button:focus {
+            outline: none; /* Удаление outline при фокусе */
         }
 
         .background-coin {
