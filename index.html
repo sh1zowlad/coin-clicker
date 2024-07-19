@@ -12,6 +12,7 @@
             height: 100vh;
             background: linear-gradient(135deg, #ffecd2, #fcb69f); /* Пастельный градиент */
             font-family: Arial, sans-serif;
+            margin: 0;
         }
         .container {
             text-align: center;
@@ -40,9 +41,13 @@
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
+            outline: none; /* Удаление outline */
         }
         .button:hover {
             background-color: #e67e00; /* Более темный оранжевый цвет при наведении */
+        }
+        .button:focus {
+            outline: none; /* Удаление outline при фокусе */
         }
     </style>
 </head>
