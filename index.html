@@ -32,6 +32,10 @@
             user-select: none; /* Запрещает выделение текста */
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убирает выделение при нажатии */
             transition: transform 0.2s ease; /* Плавная анимация при нажатии */
+            position: relative;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 140, 0, 0.7), 0 0 20px rgba(255, 140, 0, 0.5);
         }
         .coin:active {
             transform: scale(1.1); /* Увеличение монетки при нажатии */
@@ -40,9 +44,9 @@
             font-size: 24px;
             margin-top: 20px;
             color: #ff8c00; /* Оранжевый цвет */
-            white-space: nowrap; /* Запрещает перенос текста на новую строку */
-            overflow: hidden; /* Скрывает текст, выходящий за пределы контейнера */
-            text-overflow: ellipsis; /* Сокращение текста с многоточием */
+            border: 2px solid black; /* Черная рамка вокруг счётчика */
+            padding: 10px;
+            border-radius: 5px;
         }
         .button {
             display: inline-block;
