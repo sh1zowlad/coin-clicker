@@ -52,16 +52,21 @@
             transform: scale(1.1); /* Увеличение монетки при нажатии */
         }
 
+        .counter-container {
+            background: linear-gradient(135deg, #9c27b0, #f48fb1); /* Фиолетово-светло-розовый градиент */
+            background-size: 200% 200%; /* Увеличиваем размер фона для анимации */
+            animation: gradientAnimation 15s ease infinite; /* Анимация градиента */
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
         .counter {
             font-size: 24px;
-            margin-top: 20px;
-            color: #ff8c00; /* Оранжевый цвет */
+            color: white; /* Цвет текста на фоне градиента */
             white-space: nowrap; /* Запрещает перенос текста на новую строку */
             overflow: hidden; /* Скрывает текст, выходящий за пределы контейнера */
             text-overflow: ellipsis; /* Сокращение текста с многоточием */
-            border: 2px solid black; /* Черная рамка вокруг счётчика */
-            padding: 10px;
-            border-radius: 5px;
         }
 
         .button {
@@ -98,7 +103,9 @@
 <body>
     <div class="container">
         <div class="coin" onclick="incrementCounter()">🪙</div>
-        <div class="counter" id="counter">0</div>
+        <div class="counter-container">
+            <div class="counter" id="counter">0</div>
+        </div>
         <a href="https://t.me/Yude_News" class="button">Наш канал</a>
     </div>
 
