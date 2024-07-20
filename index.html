@@ -53,14 +53,14 @@
         }
 
         .counter-container {
-            background: linear-gradient(135deg, #ffffff, #9c27b0); /* Бело-фиолетовый градиент */
+            background: linear-gradient(135deg, #d4c0ff, #9c27b0); /* Бело-фиолетовый градиент */
             background-size: 200% 200%; /* Увеличиваем размер фона для анимации */
             animation: gradientAnimation 15s ease infinite; /* Анимация градиента */
             padding: 10px;
             border-radius: 5px;
             display: inline-block;
             margin: 20px 0; /* Отступы сверху и снизу для расстояния */
-            position: relative; /* Чтобы разместить контейнер по центру */
+            width: 4em; /* Фиксированная ширина для размещения 4 символов */
         }
 
         .counter {
@@ -78,6 +78,7 @@
             cursor: pointer;
             text-decoration: none;
             outline: none; /* Удаление outline */
+            margin-top: 10px;
         }
 
         .button:hover {
@@ -109,6 +110,7 @@
             <div class="counter" id="counter">0</div>
         </div>
         <a href="https://t.me/Yude_News" class="button">Наш канал</a>
+        <button class="button" onclick="resetCounter()">Сбросить счетчик</button>
     </div>
 
     <script>
@@ -183,6 +185,12 @@
 
                 body.appendChild(coin);
             }
+        }
+
+        function resetCounter() {
+            count = 0;
+            document.getElementById('counter').innerText = formatNumber(count);
+            localStorage.setItem('coinCount', count);
         }
     </script>
 </body>
