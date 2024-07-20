@@ -127,7 +127,7 @@
         <div class="counter-container">
             <div class="counter" id="counter">0</div>
         </div>
-        <a href="https://t.me/Yude_News" class="button">Наш канал</a>
+        <button class="button" onclick="openChannel()">Наш канал</button>
         <button class="button" onclick="resetCounter()">Сбросить счетчик</button>
     </div>
 
@@ -208,4 +208,13 @@
 
         function resetCounter() {
             count = 0;
-            document.getElementById('counter').innerText = formatNumber(count
+            document.getElementById('counter').innerText = formatNumber(count);
+            localStorage.setItem('coinCount', count);
+        }
+
+        function openChannel() {
+            window.open('https://t.me/Yude_News', '_blank');
+        }
+    </script>
+</body>
+</html>
