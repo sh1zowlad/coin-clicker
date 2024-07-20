@@ -34,18 +34,28 @@
         .container {
             position: relative;
             text-align: center;
-            background: white;
+            background: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый фон */
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             z-index: 1;
+            animation: fadeIn 1s ease; /* Анимация появления контейнера */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .coin {
-            font-size: 50px;
+            font-size: 60px;
             cursor: pointer;
             color: #ff8c00; /* Оранжевый цвет */
-            transition: transform 0.2s ease; /* Плавная анимация при нажатии */
+            transition: transform 0.2s ease, color 0.2s ease; /* Плавная анимация при нажатии и смене цвета */
+        }
+
+        .coin:hover {
+            color: #e67e00; /* Более темный оранжевый цвет при наведении */
         }
 
         .coin:active {
@@ -79,14 +89,18 @@
             text-decoration: none;
             outline: none; /* Удаление outline */
             margin-top: 10px;
+            transition: background-color 0.2s ease, transform 0.2s ease; /* Плавная анимация */
+            width: 150px; /* Ширина кнопок */
+            text-align: center; /* Выравнивание текста по центру */
         }
 
         .button:hover {
             background-color: #e67e00; /* Более темный оранжевый цвет при наведении */
+            transform: translateY(-3px); /* Поднятие кнопки при наведении */
         }
 
-        .button:focus {
-            outline: none; /* Удаление outline при фокусе */
+        .button:active {
+            transform: translateY(1px); /* Небольшое опускание кнопки при нажатии */
         }
 
         .background-coin {
@@ -94,6 +108,7 @@
             font-size: 30px;
             color: rgba(255, 140, 0, 0.5); /* Полупрозрачный оранжевый цвет */
             animation: float 10s ease-in-out infinite; /* Плавная анимация */
+            animation-delay: calc(-1s * var(--i)); /* Разное время задержки для анимации */
         }
 
         @keyframes float {
@@ -176,6 +191,7 @@
                 const coin = document.createElement('div');
                 coin.className = 'background-coin';
                 coin.innerText = '🪙';
+                coin.style.setProperty('--i', i);
 
                 // Позиционирование, размер и вращение монеток
                 coin.style.top = Math.random() * 100 + '%';
