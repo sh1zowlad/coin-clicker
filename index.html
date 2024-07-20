@@ -40,6 +40,7 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             z-index: 1;
             animation: fadeIn 1s ease; /* Анимация появления контейнера */
+            width: 300px; /* Уменьшаем ширину контейнера */
         }
 
         @keyframes fadeIn {
@@ -90,8 +91,10 @@
             outline: none; /* Удаление outline */
             margin-top: 10px;
             transition: background-color 0.2s ease, transform 0.2s ease; /* Плавная анимация */
-            width: 150px; /* Ширина кнопок */
+            width: 100%; /* Ширина кнопок */
             text-align: center; /* Выравнивание текста по центру */
+            font-size: 16px; /* Размер шрифта */
+            height: 50px; /* Высота кнопок */
         }
 
         .button:hover {
@@ -205,9 +208,4 @@
 
         function resetCounter() {
             count = 0;
-            document.getElementById('counter').innerText = formatNumber(count);
-            localStorage.setItem('coinCount', count);
-        }
-    </script>
-</body>
-</html>
+            document.getElementById('counter').innerText = formatNumber(count
