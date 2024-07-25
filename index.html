@@ -136,12 +136,12 @@
         <div class="profile">
             <img src="profile.jpg" alt="Profile Image">
             <div class="profile-name">koval1dze</div>
-            <div class="balance" id="counter">₿ 0</div>
+            <div class="balance" id="counter">¥ 0</div>
         </div>
         <div class="coin" onclick="incrementCounter()">🪙</div>
         <button class="button" onclick="openChannel()">Наш канал</button>
         <button class="button secondary" onclick="resetCounter()">Сбросить счетчик</button>
-        <button class="button warning" onclick="clearLocalStorage()">Очистить данные</button>
+        <button class="button warning" onclick="clearAccountStorage()">Очистить данные</button>
     </div>
     <div class="nav-bar">
         <a href="#">Home</a>
@@ -155,15 +155,15 @@
         const userId = 'user123'; // Замените на динамический user ID
 
         // Проверка флага сброса
-        if (!localStorage.getItem('resetDone')) {
-            localStorage.clear();
-            localStorage.setItem('resetDone', 'true');
+        if (!accountStorage.getItem('resetDone')) {
+            accountStorage.clear();
+            accountStorage.setItem('resetDone', 'true');
         }
 
-        // Загрузка сохраненного количества из localStorage при загрузке страницы
+        // Загрузка сохраненного количества из accountStorage при загрузке страницы
         window.onload = function() {
-            if (localStorage.getItem('coinCount')) {
-                count = parseInt(localStorage.getItem('coinCount'));
+            if (accountStorage.getItem('coinCount')) {
+                count = parseInt(accountStorage.getItem('coinCount'));
                 document.getElementById('counter').innerText = formatNumber(count);
             }
         };
@@ -175,7 +175,7 @@
         }
 
         function saveData(clicks) {
-            localStorage.setItem('coinCount', clicks);
+            accountStorage.setItem('coinCount', clicks);
 
             fetch('https://your-flask-server.herokuapp.com/save', {
                 method: 'POST',
@@ -190,26 +190,26 @@
 
         function formatNumber(num) {
             if (num >= 1e12) {
-                return '₿ ' + (num / 1e12).toFixed(2) + 'T';
+                return '¥ ' + (num / 1e12).toFixed(2) + 'T';
             } else if (num >= 1e9) {
-                return '₿ ' + (num / 1e9).toFixed(2) + 'B';
+                return '¥ ' + (num / 1e9).toFixed(2) + 'B';
             } else if (num >= 1e6) {
-                return '₿ ' + (num / 1e6).toFixed(2) + 'M';
+                return '¥ ' + (num / 1e6).toFixed(2) + 'M';
             } else if (num >= 1e3) {
-                return '₿ ' + (num / 1e3).toFixed(2) + 'K';
+                return '¥ ' + (num / 1e3).toFixed(2) + 'K';
             } else {
-                return '₿ ' + num.toString();
+                return '¥ ' + num.toString();
             }
         }
 
         function resetCounter() {
             count = 0;
             document.getElementById('counter').innerText = formatNumber(count);
-            localStorage.setItem('coinCount', count);
+            accountStorage.setItem('coinCount', count);
         }
 
-        function clearLocalStorage() {
-            localStorage.clear();
+        function clearAccountStorage() {
+            accountStorage.clear();
             count = 0;
             document.getElementById('counter').innerText = formatNumber(count);
         }
@@ -217,6 +217,19 @@
         function openChannel() {
             window.open('https://t.me/Yude_News', '_blank');
         }
+
+        // Переопределение методов accountStorage для использования в коде
+        const accountStorage = {
+            getItem(key) {
+                return localStorage.getItem(key);
+            },
+            setItem(key, value) {
+                localStorage.setItem(key, value);
+            },
+            clear() {
+                localStorage.clear();
+            }
+        };
     </script>
 </body>
 </html>
