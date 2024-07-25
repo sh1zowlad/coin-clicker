@@ -8,128 +8,146 @@
         html, body {
             height: 100%;
             margin: 0;
-            overflow: hidden; /* Отключаем прокрутку */
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убираем выделение при нажатии */
-            user-select: none; /* Запрещаем выделение текста */
-            -webkit-user-select: none; /* Запрещаем выделение текста в WebKit-браузерах */
-            -ms-user-select: none; /* Запрещаем выделение текста в IE и Edge */
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #2c3e50; /* Темный фон */
+            overflow: hidden;
             font-family: 'Roboto', sans-serif;
+            background-color: #121212; /* Темный фон */
+            color: white; /* Белый текст */
         }
 
         .container {
-            position: relative;
-            text-align: center;
-            background: #34495e; /* Темно-синий фон */
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            width: 300px; /* Ширина контейнера */
-            color: white; /* Белый текст */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .balance {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 30px;
         }
 
         .coin {
             font-size: 80px;
             cursor: pointer;
-            color: #f1c40f; /* Желтый цвет */
-            transition: transform 0.2s ease, color 0.2s ease; /* Плавная анимация при нажатии и смене цвета */
+            color: #f1c40f;
+            transition: transform 0.2s ease, color 0.2s ease;
         }
 
         .coin:hover {
-            color: #f39c12; /* Более темный желтый цвет при наведении */
+            color: #f39c12;
         }
 
         .coin:active {
-            transform: scale(1.1); /* Увеличение монетки при нажатии */
-        }
-
-        .counter-container {
-            background: #2ecc71; /* Зеленый фон */
-            padding: 15px;
-            border-radius: 10px;
-            display: inline-block;
-            margin: 20px 0; /* Отступы сверху и снизу для расстояния */
-            width: 6em; /* Фиксированная ширина для размещения 4 символов */
-        }
-
-        .counter {
-            font-size: 28px;
-            color: white; /* Цвет текста на фоне градиента */
+            transform: scale(1.1);
         }
 
         .button {
             display: inline-block;
             padding: 15px 20px;
-            background-color: #3498db; /* Синий цвет */
+            background-color: #3498db;
             color: white;
             border: none;
             border-radius: 10px;
             cursor: pointer;
             text-decoration: none;
-            outline: none; /* Удаление outline */
+            outline: none;
             margin-top: 10px;
-            transition: background-color 0.2s ease, transform 0.2s ease; /* Плавная анимация */
-            width: 100%; /* Ширина кнопок */
-            text-align: center; /* Выравнивание текста по центру */
-            font-size: 18px; /* Размер шрифта */
-            height: 50px; /* Высота кнопок */
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            width: 100%;
+            text-align: center;
+            font-size: 18px;
+            height: 50px;
         }
 
         .button:hover {
-            background-color: #2980b9; /* Более темный синий цвет при наведении */
-            transform: translateY(-3px); /* Поднятие кнопки при наведении */
+            background-color: #2980b9;
+            transform: translateY(-3px);
         }
 
         .button:active {
-            transform: translateY(1px); /* Небольшое опускание кнопки при нажатии */
+            transform: translateY(1px);
         }
 
         .button.secondary {
-            background-color: #2ecc71; /* Зеленый цвет */
+            background-color: #2ecc71;
         }
 
         .button.secondary:hover {
-            background-color: #27ae60; /* Более темный зеленый цвет при наведении */
+            background-color: #27ae60;
         }
 
         .button.warning {
-            background-color: #e74c3c; /* Красный цвет */
+            background-color: #e74c3c;
         }
 
         .button.warning:hover {
-            background-color: #c0392b; /* Более темный красный цвет при наведении */
+            background-color: #c0392b;
         }
 
-        .background-coin {
+        .nav-bar {
             position: absolute;
-            font-size: 30px;
-            color: rgba(255, 140, 0, 0.5); /* Полупрозрачный оранжевый цвет */
-            animation: float 10s ease-in-out infinite; /* Плавная анимация */
-            animation-delay: calc(-1s * var(--i)); /* Разное время задержки для анимации */
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            background-color: #1e1e1e;
+            border-top: 1px solid #333;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0); }
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            flex: 1;
+        }
+
+        .nav-bar a:hover {
+            color: #f39c12;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="coin" onclick="incrementCounter()">🪙</div>
-        <div class="counter-container">
-            <div class="counter" id="counter">0</div>
+        <div class="profile">
+            <img src="profile.jpg" alt="Profile Image">
+            <div class="profile-name">koval1dze</div>
+            <div class="balance" id="counter">₿ 0</div>
         </div>
+        <div class="coin" onclick="incrementCounter()">🪙</div>
         <button class="button" onclick="openChannel()">Наш канал</button>
         <button class="button secondary" onclick="resetCounter()">Сбросить счетчик</button>
         <button class="button warning" onclick="clearLocalStorage()">Очистить данные</button>
+    </div>
+    <div class="nav-bar">
+        <a href="#">Home</a>
+        <a href="#">Tasks</a>
+        <a href="#">Frens</a>
+        <a href="#">Wallet</a>
     </div>
 
     <script>
@@ -138,8 +156,8 @@
 
         // Проверка флага сброса
         if (!localStorage.getItem('resetDone')) {
-            localStorage.clear(); // Очистка localStorage
-            localStorage.setItem('resetDone', 'true'); // Установка флага сброса
+            localStorage.clear();
+            localStorage.setItem('resetDone', 'true');
         }
 
         // Загрузка сохраненного количества из localStorage при загрузке страницы
@@ -148,20 +166,17 @@
                 count = parseInt(localStorage.getItem('coinCount'));
                 document.getElementById('counter').innerText = formatNumber(count);
             }
-            createBackgroundCoins(); // Создание монеток на фоне
         };
 
         function incrementCounter() {
-            count++; // Увеличение на 1
+            count++;
             document.getElementById('counter').innerText = formatNumber(count);
             saveData(count);
         }
 
         function saveData(clicks) {
-            // Сохранение количества в localStorage
             localStorage.setItem('coinCount', clicks);
 
-            // Опционально: Сохранение количества на сервере
             fetch('https://your-flask-server.herokuapp.com/save', {
                 method: 'POST',
                 headers: {
@@ -175,35 +190,15 @@
 
         function formatNumber(num) {
             if (num >= 1e12) {
-                return (num / 1e12).toFixed(2) + 'T';
+                return '₿ ' + (num / 1e12).toFixed(2) + 'T';
             } else if (num >= 1e9) {
-                return (num / 1e9).toFixed(2) + 'B';
+                return '₿ ' + (num / 1e9).toFixed(2) + 'B';
             } else if (num >= 1e6) {
-                return (num / 1e6).toFixed(2) + 'M';
+                return '₿ ' + (num / 1e6).toFixed(2) + 'M';
             } else if (num >= 1e3) {
-                return (num / 1e3).toFixed(2) + 'K';
+                return '₿ ' + (num / 1e3).toFixed(2) + 'K';
             } else {
-                return num.toString();
-            }
-        }
-
-        function createBackgroundCoins() {
-            const body = document.body;
-            const numCoins = 50; // Количество монеток на фоне
-
-            for (let i = 0; i < numCoins; i++) {
-                const coin = document.createElement('div');
-                coin.className = 'background-coin';
-                coin.innerText = '🪙';
-                coin.style.setProperty('--i', i);
-
-                // Позиционирование, размер и вращение монеток
-                coin.style.top = Math.random() * 100 + '%';
-                coin.style.left = Math.random() * 100 + '%';
-                coin.style.fontSize = 20 + Math.random() * 40 + 'px';
-                coin.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
-
-                body.appendChild(coin);
+                return '₿ ' + num.toString();
             }
         }
 
