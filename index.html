@@ -19,44 +19,30 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #8e44ad, #3498db); /* Фиолетово-синий градиент */
-            background-size: 200% 200%; /* Увеличиваем размер фона для анимации */
-            animation: gradientAnimation 15s ease infinite; /* Анимация градиента */
-            font-family: Arial, sans-serif;
-        }
-
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
+            background: #2c3e50; /* Темный фон */
+            font-family: 'Roboto', sans-serif;
         }
 
         .container {
             position: relative;
             text-align: center;
-            background: rgba(255, 255, 255, 0.95); /* Полупрозрачный белый фон */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            z-index: 1;
-            animation: fadeIn 1s ease; /* Анимация появления контейнера */
-            width: 350px; /* Ширина контейнера */
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            background: #34495e; /* Темно-синий фон */
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 300px; /* Ширина контейнера */
+            color: white; /* Белый текст */
         }
 
         .coin {
-            font-size: 70px;
+            font-size: 80px;
             cursor: pointer;
-            color: #f39c12; /* Оранжевый цвет */
+            color: #f1c40f; /* Желтый цвет */
             transition: transform 0.2s ease, color 0.2s ease; /* Плавная анимация при нажатии и смене цвета */
         }
 
         .coin:hover {
-            color: #e67e00; /* Более темный оранжевый цвет при наведении */
+            color: #f39c12; /* Более темный желтый цвет при наведении */
         }
 
         .coin:active {
@@ -64,11 +50,9 @@
         }
 
         .counter-container {
-            background: linear-gradient(135deg, #ffafbd, #ffc3a0); /* Бело-фиолетовый градиент */
-            background-size: 200% 200%; /* Увеличиваем размер фона для анимации */
-            animation: gradientAnimation 15s ease infinite; /* Анимация градиента */
-            padding: 10px;
-            border-radius: 5px;
+            background: #2ecc71; /* Зеленый фон */
+            padding: 15px;
+            border-radius: 10px;
             display: inline-block;
             margin: 20px 0; /* Отступы сверху и снизу для расстояния */
             width: 6em; /* Фиксированная ширина для размещения 4 символов */
@@ -81,11 +65,11 @@
 
         .button {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 15px 20px;
             background-color: #3498db; /* Синий цвет */
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
             text-decoration: none;
             outline: none; /* Удаление outline */
@@ -205,7 +189,7 @@
 
         function createBackgroundCoins() {
             const body = document.body;
-            const numCoins = 100; // Количество монеток на фоне
+            const numCoins = 50; // Количество монеток на фоне
 
             for (let i = 0; i < numCoins; i++) {
                 const coin = document.createElement('div');
