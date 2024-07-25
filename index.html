@@ -19,7 +19,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #ff4e50, #f9d423); /* Красно-желтый градиент */
+            background: linear-gradient(135deg, #8e44ad, #3498db); /* Фиолетово-синий градиент */
             background-size: 200% 200%; /* Увеличиваем размер фона для анимации */
             animation: gradientAnimation 15s ease infinite; /* Анимация градиента */
             font-family: Arial, sans-serif;
@@ -34,13 +34,13 @@
         .container {
             position: relative;
             text-align: center;
-            background: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый фон */
+            background: rgba(255, 255, 255, 0.95); /* Полупрозрачный белый фон */
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             z-index: 1;
             animation: fadeIn 1s ease; /* Анимация появления контейнера */
-            width: 300px; /* Уменьшаем ширину контейнера */
+            width: 350px; /* Ширина контейнера */
         }
 
         @keyframes fadeIn {
@@ -49,9 +49,9 @@
         }
 
         .coin {
-            font-size: 60px;
+            font-size: 70px;
             cursor: pointer;
-            color: #ff8c00; /* Оранжевый цвет */
+            color: #f39c12; /* Оранжевый цвет */
             transition: transform 0.2s ease, color 0.2s ease; /* Плавная анимация при нажатии и смене цвета */
         }
 
@@ -64,25 +64,25 @@
         }
 
         .counter-container {
-            background: linear-gradient(135deg, #d4c0ff, #9c27b0); /* Бело-фиолетовый градиент */
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0); /* Бело-фиолетовый градиент */
             background-size: 200% 200%; /* Увеличиваем размер фона для анимации */
             animation: gradientAnimation 15s ease infinite; /* Анимация градиента */
             padding: 10px;
             border-radius: 5px;
             display: inline-block;
             margin: 20px 0; /* Отступы сверху и снизу для расстояния */
-            width: 4em; /* Фиксированная ширина для размещения 4 символов */
+            width: 6em; /* Фиксированная ширина для размещения 4 символов */
         }
 
         .counter {
-            font-size: 24px;
+            font-size: 28px;
             color: white; /* Цвет текста на фоне градиента */
         }
 
         .button {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #ff8c00; /* Оранжевый цвет */
+            background-color: #3498db; /* Синий цвет */
             color: white;
             border: none;
             border-radius: 5px;
@@ -93,17 +93,33 @@
             transition: background-color 0.2s ease, transform 0.2s ease; /* Плавная анимация */
             width: 100%; /* Ширина кнопок */
             text-align: center; /* Выравнивание текста по центру */
-            font-size: 16px; /* Размер шрифта */
+            font-size: 18px; /* Размер шрифта */
             height: 50px; /* Высота кнопок */
         }
 
         .button:hover {
-            background-color: #e67e00; /* Более темный оранжевый цвет при наведении */
+            background-color: #2980b9; /* Более темный синий цвет при наведении */
             transform: translateY(-3px); /* Поднятие кнопки при наведении */
         }
 
         .button:active {
             transform: translateY(1px); /* Небольшое опускание кнопки при нажатии */
+        }
+
+        .button.secondary {
+            background-color: #2ecc71; /* Зеленый цвет */
+        }
+
+        .button.secondary:hover {
+            background-color: #27ae60; /* Более темный зеленый цвет при наведении */
+        }
+
+        .button.warning {
+            background-color: #e74c3c; /* Красный цвет */
+        }
+
+        .button.warning:hover {
+            background-color: #c0392b; /* Более темный красный цвет при наведении */
         }
 
         .background-coin {
@@ -128,7 +144,8 @@
             <div class="counter" id="counter">0</div>
         </div>
         <button class="button" onclick="openChannel()">Наш канал</button>
-        <button class="button" onclick="resetCounter()">Сбросить счетчик</button>
+        <button class="button secondary" onclick="resetCounter()">Сбросить счетчик</button>
+        <button class="button warning" onclick="clearLocalStorage()">Очистить данные</button>
     </div>
 
     <script>
@@ -210,6 +227,12 @@
             count = 0;
             document.getElementById('counter').innerText = formatNumber(count);
             localStorage.setItem('coinCount', count);
+        }
+
+        function clearLocalStorage() {
+            localStorage.clear();
+            count = 0;
+            document.getElementById('counter').innerText = formatNumber(count);
         }
 
         function openChannel() {
