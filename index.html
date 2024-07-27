@@ -1,4 +1,4 @@
-]<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -90,6 +90,21 @@
             transform: scale(1.1);
         }
 
+        .farm-button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #f39c12;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .farm-button:hover {
+            background-color: #e67e22;
+        }
+
         .nav-bar {
             position: absolute;
             bottom: 0;
@@ -131,12 +146,12 @@
             <div class="balance" id="counter">¥ 0</div>
         </div>
         <div class="coin" onclick="incrementCounter()">🪙</div>
+        <button class="farm-button" onclick="startFarming()">Start Farming 50 Coins</button>
     </div>
     <div class="nav-bar">
         <a href="#">Home</a>
         <a href="#">Tasks</a>
         <a href="#">Frens</a>
-        <a href="#">Wallet</a>
     </div>
 
     <script>
@@ -155,6 +170,17 @@
             count++;
             document.getElementById('counter').innerText = formatNumber(count);
             saveData(count);
+        }
+
+        function startFarming() {
+            const farmingDuration = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+            const farmingAmount = 50;
+
+            setTimeout(() => {
+                count += farmingAmount;
+                document.getElementById('counter').innerText = formatNumber(count);
+                saveData(count);
+            }, farmingDuration);
         }
 
         function saveData(clicks) {
