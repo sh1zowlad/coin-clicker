@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+]<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,8 +10,38 @@
             margin: 0;
             overflow: hidden;
             font-family: 'Roboto', sans-serif;
-            background-color: #121212; /* Темный фон */
-            color: white; /* Белый текст */
+            background-color: #121212; /* Dark background */
+            color: white; /* White text */
+        }
+
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #1e1e1e;
+            border-bottom: 1px solid #333;
+        }
+
+        .wallet-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .wallet-balance {
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .bonus {
+            font-size: 14px;
+            color: #f39c12;
+        }
+
+        .wallet-id {
+            font-size: 14px;
         }
 
         .container {
@@ -19,7 +49,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100%;
+            height: calc(100% - 60px); /* Adjust height to exclude top bar and nav bar */
             padding: 20px;
             box-sizing: border-box;
         }
@@ -53,35 +83,11 @@
             font-size: 80px;
             cursor: pointer;
             color: #f1c40f;
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-
-        .coin:hover {
-            color: #f39c12;
+            transition: transform 0.2s ease;
         }
 
         .coin:active {
             transform: scale(1.1);
-        }
-
-        .top-bar {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 20px;
-            background-color: #1e1e1e;
-            border-bottom: 1px solid #333;
-        }
-
-        .wallet-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .wallet-balance {
-            font-size: 20px;
-            font-weight: bold;
-            margin-right: 20px;
         }
 
         .nav-bar {
@@ -101,9 +107,11 @@
             text-decoration: none;
             text-align: center;
             flex: 1;
+            padding: 10px;
         }
 
         .nav-bar a:hover {
+            background-color: #333;
             color: #f39c12;
         }
     </style>
@@ -133,9 +141,9 @@
 
     <script>
         let count = 0;
-        const userId = 'user123'; // Замените на динамический user ID
+        const userId = 'user123'; // Replace with dynamic user ID
 
-        // Загрузка сохраненного количества из accountStorage при загрузке страницы
+        // Load saved count from localStorage on page load
         window.onload = function() {
             if (localStorage.getItem('coinCount')) {
                 count = parseInt(localStorage.getItem('coinCount'));
