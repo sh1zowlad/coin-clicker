@@ -39,26 +39,23 @@
             font-size: 60px;
             cursor: pointer;
             margin-bottom: 20px;
-            animation: bounce 1s infinite;
+            transition: transform 0.3s ease;
+            position: relative;
         }
 
         .coin:hover {
-            animation: spin 0.5s infinite, glow 1.5s infinite alternate;
+            transform: scale(1.1);
+            animation: bounce 1s infinite, shine 1.5s infinite alternate;
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-15px); }
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes glow {
-            0% { box-shadow: 0 0 10px #ffcc00; }
-            100% { box-shadow: 0 0 20px #ff9900; }
+        @keyframes shine {
+            0% { text-shadow: 0 0 5px #ffcc00; }
+            100% { text-shadow: 0 0 15px #ffcc00; }
         }
 
         .hot-bar {
@@ -103,7 +100,7 @@
             border-radius: 10px;
             cursor: pointer;
             width: 120px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
 
         .shop-item:hover {
@@ -118,21 +115,26 @@
             border-radius: 10px;
             text-align: left;
             box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 300px;
         }
 
         .leaderboard h3 {
             text-align: center;
             margin-bottom: 10px;
+            color: #76c7c0;
         }
 
         .leaderboard ul {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
 
         .leaderboard li {
             font-size: 16px;
             margin-bottom: 5px;
+            color: #e0e0e0;
         }
     </style>
 </head>
@@ -184,7 +186,7 @@
             .then(data => {
                 count = data.coins;
                 document.getElementById('username').innerText = `@${data.username}`;
-                document.getElementById('counter').innerText = formatNumber(count);
+                updateUI();
                 fetchLeaderboard();
                 if (data.timerEndTime) {
                     timerEndTime = new Date(data.timerEndTime);
