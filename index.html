@@ -43,7 +43,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: calc(100% - 60px); /* Adjust height to exclude top bar and nav bar */
+            height: calc(100% - 60px); /* Adjust height to exclude top bar */
             padding: 20px;
             box-sizing: border-box;
         }
@@ -58,90 +58,135 @@
         .profile img {
             border-radius: 50%;
             width: 80px;
-            height: 80px;
             margin-bottom: 10px;
         }
 
-        .profile-name {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-
-        .balance {
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 30px;
-        }
-
-        .farm-button {
-            font-size: 20px;
-            padding: 10px 20px;
-            margin-top: 20px;
-            background-color: #f39c12;
-            border: none;
-            color: white;
+        .coin {
+            font-size: 60px;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
         }
 
-        .farm-button:hover {
-            background-color: #e67e22;
+        .coin:hover {
+            animation: spin 0.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .counter {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0;
+            background-color: #76c7c0;
+            transition: width 0.5s;
         }
 
         .timer {
             font-size: 18px;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
-        .nav-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+        .shop {
+            width: 80%;
             display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
+            justify-content: space-between;
+        }
+
+        .shop-item {
             background-color: #1e1e1e;
-            border-top: 1px solid #333;
-        }
-
-        .nav-bar a {
-            color: white;
-            text-decoration: none;
-            text-align: center;
-            flex: 1;
             padding: 10px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 30%;
         }
 
-        .nav-bar a:hover {
-            background-color: #333;
-            color: #f39c12;
+        .leaderboard {
+            margin-top: 30px;
+            width: 100%;
+            background-color: #1e1e1e;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .leaderboard h3 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .leaderboard ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .leaderboard li {
+            font-size: 16px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
     <div class="top-bar">
         <div class="wallet-info">
-            <div class="wallet-balance" id="counter">0 🪙</div>
+            <div class="wallet-balance" id="walletBalance">¥ 0</div>
+            <div class="wallet-id">ID: user123</div>
         </div>
-        <div class="wallet-id">UQB...GgU</div>
     </div>
+
     <div class="container">
         <div class="profile">
-            <img src="profile.jpg" alt="Profile Image">
-            <div class="profile-name">koval1dze</div>
+            <img src="https://via.placeholder.com/80" alt="Profile">
+            <div>Welcome, Player!</div>
         </div>
-        <button class="farm-button" onclick="startFarming()">Start Farming 50 Coins</button>
-        <div class="timer" id="timer">Time remaining: --:--:--</div>
-    </div>
-    <div class="nav-bar">
-        <a href="#">Home</a>
-        <a href="#">Tasks</a>
-        <a href="#">Frens</a>
+
+        <div class="coin" id="coin">💰</div>
+        <div class="counter" id="counter">¥ 0</div>
+
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div class="timer" id="timer">Time remaining: 00:00:00</div>
+
+        <div class="shop">
+            <div class="shop-item" onclick="buyMultiplier()">Multiplier (Cost: ¥ 500)</div>
+            <div class="shop-item" onclick="startFarming()">Start Farming (50 coins)</div>
+        </div>
+
+        <div class="leaderboard">
+            <h3>Leaderboard</h3>
+            <ul id="leaderboard">
+                <li>User123: ¥ 1200</li>
+                <li>User456: ¥ 900</li>
+                <li>User789: ¥ 600</li>
+            </ul>
+        </div>
     </div>
 
     <script>
         let count = 0;
+        let multiplier = 1;
         let farmingInterval;
         const userId = 'user123'; // Replace with dynamic user ID
 
@@ -153,8 +198,24 @@
             }
         };
 
+        document.getElementById('coin').addEventListener('click', () => {
+            count += 1 * multiplier;
+            updateUI();
+            saveData(count);
+        });
+
+        function buyMultiplier() {
+            if (count >= 500) {
+                multiplier *= 2;
+                count -= 500;
+                updateUI();
+            } else {
+                alert("Not enough coins!");
+            }
+        }
+
         function startFarming() {
-            const farmingDuration = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+            const farmingDuration = 10 * 1000; // 10 seconds for demo
             const farmingAmount = 50;
             const startTime = Date.now();
             const endTime = startTime + farmingDuration;
@@ -166,7 +227,7 @@
                 if (Date.now() >= endTime) {
                     clearInterval(farmingInterval);
                     count += farmingAmount;
-                    document.getElementById('counter').innerText = formatNumber(count);
+                    updateUI();
                     saveData(count);
                 }
             }, 1000);
@@ -177,40 +238,42 @@
             const remainingTime = endTime - now;
 
             if (remainingTime > 0) {
-                const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-                document.getElementById('timer').innerText = `Time remaining: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                document.getElementById('timer').innerText = `Time remaining: 00:00:${seconds.toString().padStart(2, '0')}`;
+                updateProgressBar(remainingTime, 10000); // update progress bar
             } else {
                 document.getElementById('timer').innerText = 'Farming complete!';
             }
         }
 
+        function updateProgressBar(remainingTime, totalDuration) {
+            const progress = ((totalDuration - remainingTime) / totalDuration) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+        }
+
+        function updateUI() {
+            document.getElementById('counter').innerText = formatNumber(count);
+            document.getElementById('walletBalance').innerText = `¥ ${formatNumber(count)}`;
+        }
+
         function saveData(clicks) {
             localStorage.setItem('coinCount', clicks);
 
-            fetch('https://your-flask-server.herokuapp.com/save', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ user_id: userId, clicks: clicks })
-            }).then(response => response.json())
-              .then(data => console.log(data))
-              .catch(error => console.error('Error:', error));
+            // Simulate saving to the server
+            console.log('Saved to server:', clicks);
         }
 
         function formatNumber(num) {
             if (num >= 1e12) {
-                return '¥ ' + (num / 1e12).toFixed(2) + 'T';
+                return (num / 1e12).toFixed(2) + 'T';
             } else if (num >= 1e9) {
-                return '¥ ' + (num / 1e9).toFixed(2) + 'B';
+                return (num / 1e9).toFixed(2) + 'B';
             } else if (num >= 1e6) {
-                return '¥ ' + (num / 1e6).toFixed(2) + 'M';
+                return (num / 1e6).toFixed(2) + 'M';
             } else if (num >= 1e3) {
-                return '¥ ' + (num / 1e3).toFixed(2) + 'K';
+                return (num / 1e3).toFixed(2) + 'K';
             } else {
-                return '¥ ' + num.toString();
+                return num.toString();
             }
         }
     </script>
