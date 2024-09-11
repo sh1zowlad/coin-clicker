@@ -143,6 +143,30 @@
             font-size: 24px;
         }
 
+        .hot-bar {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .progress-bar {
+            flex: 1;
+            margin-left: 20px;
+            height: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0;
+            background-color: #76c7c0;
+            transition: width 0.5s;
+        }
+
         .shop {
             width: 80%;
             display: flex;
@@ -193,7 +217,6 @@
             margin-bottom: 5px;
         }
 
-        /* New styles for image upload button */
         .upload-btn {
             cursor: pointer;
             background-color: #ffcc00;
@@ -233,12 +256,11 @@
         <div class="coin" id="coin">💰</div>
         <div class="counter" id="counter">¥ 0</div>
 
-        <div class="circular-timer">
-            <svg width="150" height="150">
-                <circle class="circle-bg" cx="75" cy="75" r="70"></circle>
-                <circle class="circle" cx="75" cy="75" r="70"></circle>
-            </svg>
-            <div class="time-display" id="timer">00:00</div>
+        <div class="hot-bar">
+            <div class="timer" id="timer">05:00</div>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
         </div>
 
         <div class="shop">
@@ -261,6 +283,8 @@
         let multiplier = 1;
         let farmingInterval;
         const userId = 'user123'; // Replace with dynamic user ID
+        const timerDuration = 5 * 60 * 1000; // 5 minutes in milliseconds
+        let timerInterval;
 
         window.onload = function() {
             if (localStorage.getItem('coinCount')) {
@@ -275,14 +299,14 @@
         };
 
         // Handle profile image upload
-        document.getElementById('fileInput').addEventListener('change', function(event) {
+        document.getElementById('fileInput').addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const imageUrl = e.target.result;
                     document.getElementById('profileImage').src = imageUrl;
-                    localStorage.setItem('profileImage', imageUrl); // Save image to localStorage
+                    localStorage.setItem('profileImage', imageUrl);
                 };
                 reader.readAsDataURL(file);
             }
@@ -305,10 +329,8 @@
         }
 
         function startFarming() {
-            const farmingDuration = 10 * 1000; // 10 seconds for demo
-            const farmingAmount = 50;
             const startTime = Date.now();
-            const endTime = startTime + farmingDuration;
+            const endTime = startTime + timerDuration;
 
             updateTimer(endTime);
             farmingInterval = setInterval(() => {
@@ -316,7 +338,7 @@
 
                 if (Date.now() >= endTime) {
                     clearInterval(farmingInterval);
-                    count += farmingAmount;
+                    count += 50;
                     updateUI();
                     saveData(count);
                 }
@@ -326,19 +348,20 @@
         function updateTimer(endTime) {
             const now = Date.now();
             const remainingTime = endTime - now;
+            const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
-            if (remainingTime > 0) {
-                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-                document.getElementById('timer').innerText = `00:00:${seconds.toString().padStart(2, '0')}`;
-                updateCircularProgressBar(remainingTime, 10000);
-            } else {
-                document.getElementById('timer').innerText = 'Farming complete!';
+            document.getElementById('timer').innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            updateProgressBar(remainingTime, timerDuration);
+
+            if (remainingTime <= 0) {
+                document.getElementById('timer').innerText = '00:00';
             }
         }
 
-        function updateCircularProgressBar(remainingTime, totalDuration) {
-            const progress = ((totalDuration - remainingTime) / totalDuration) * 472;
-            document.querySelector('.circle').style.strokeDashoffset = `${472 - progress}`;
+        function updateProgressBar(remainingTime, totalDuration) {
+            const progress = ((totalDuration - remainingTime) / totalDuration) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
         }
 
         function updateUI() {
@@ -348,7 +371,6 @@
 
         function saveData(clicks) {
             localStorage.setItem('coinCount', clicks);
-            console.log('Saved to server:', clicks);
         }
 
         function formatNumber(num) {
