@@ -53,13 +53,10 @@
             align-items: center;
         }
 
-        .wallet-balance {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
         .wallet-id {
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffcc00;
         }
 
         .container {
@@ -79,10 +76,10 @@
             margin-bottom: 20px;
         }
 
-        .profile img {
-            border-radius: 50%;
-            width: 80px;
-            margin-bottom: 10px;
+        .username {
+            font-size: 24px;
+            font-weight: bold;
+            color: #76c7c0;
         }
 
         .coin {
@@ -110,37 +107,6 @@
         @keyframes glow {
             0% { box-shadow: 0 0 10px #ffcc00; }
             100% { box-shadow: 0 0 20px #ff9900; }
-        }
-
-        .circular-timer {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            margin-bottom: 20px;
-        }
-
-        .circular-timer .circle-bg {
-            fill: none;
-            stroke: #333;
-            stroke-width: 10;
-        }
-
-        .circular-timer .circle {
-            fill: none;
-            stroke: #76c7c0;
-            stroke-width: 10;
-            stroke-linecap: round;
-            stroke-dasharray: 472;
-            stroke-dashoffset: 472;
-            transition: stroke-dashoffset 0.35s;
-        }
-
-        .circular-timer .time-display {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 24px;
         }
 
         .hot-bar {
@@ -217,40 +183,18 @@
             margin-bottom: 5px;
         }
 
-        .upload-btn {
-            cursor: pointer;
-            background-color: #ffcc00;
-            color: black;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            transition: background-color 0.3s ease;
-        }
-
-        .upload-btn:hover {
-            background-color: #ff9900;
-        }
-
-        #fileInput {
-            display: none;
-        }
     </style>
 </head>
 <body>
     <div class="top-bar">
         <div class="wallet-info">
-            <div class="wallet-balance" id="walletBalance">¥ 0</div>
-            <div class="wallet-id">ID: user123</div>
+            <div class="wallet-id">@username</div> <!-- Changed to @username -->
         </div>
     </div>
 
     <div class="container">
         <div class="profile">
-            <img src="https://via.placeholder.com/80" alt="Profile" id="profileImage">
-            <div>Welcome, Player!</div>
-            <label class="upload-btn" for="fileInput">Upload Profile Image</label>
-            <input type="file" id="fileInput" accept="image/*">
+            <div class="username">@username</div> <!-- @username displayed -->
         </div>
 
         <div class="coin" id="coin">💰</div>
@@ -291,26 +235,7 @@
                 count = parseInt(localStorage.getItem('coinCount'));
                 document.getElementById('counter').innerText = formatNumber(count);
             }
-
-            // Check if a profile image was previously uploaded
-            if (localStorage.getItem('profileImage')) {
-                document.getElementById('profileImage').src = localStorage.getItem('profileImage');
-            }
         };
-
-        // Handle profile image upload
-        document.getElementById('fileInput').addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const imageUrl = e.target.result;
-                    document.getElementById('profileImage').src = imageUrl;
-                    localStorage.setItem('profileImage', imageUrl);
-                };
-                reader.readAsDataURL(file);
-            }
-        });
 
         document.getElementById('coin').addEventListener('click', () => {
             count += 1 * multiplier;
@@ -366,7 +291,6 @@
 
         function updateUI() {
             document.getElementById('counter').innerText = formatNumber(count);
-            document.getElementById('walletBalance').innerText = `¥ ${formatNumber(count)}`;
         }
 
         function saveData(clicks) {
