@@ -5,13 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coin Clicker</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
         html, body {
             height: 100%;
             margin: 0;
             overflow: hidden;
             font-family: 'Roboto', sans-serif;
-            background-color: #121212; /* Dark background */
-            color: white; /* White text */
+            background-color: #121212;
+            color: white;
+            position: relative;
+        }
+
+        /* Background animation */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #ff3e00, #120f28);
+            animation: gradientShift 8s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                background: radial-gradient(circle, #ff3e00, #120f28);
+            }
+            50% {
+                background: radial-gradient(circle, #008cff, #120f28);
+            }
         }
 
         .top-bar {
@@ -43,7 +68,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: calc(100% - 60px); /* Adjust height to exclude top bar */
+            height: calc(100% - 60px);
             padding: 20px;
             box-sizing: border-box;
         }
@@ -66,10 +91,11 @@
             cursor: pointer;
             margin-bottom: 20px;
             animation: bounce 1s infinite;
+            position: relative;
         }
 
         .coin:hover {
-            animation: spin 0.5s infinite;
+            animation: spin 0.5s infinite, glow 1.5s infinite alternate;
         }
 
         @keyframes bounce {
@@ -80,6 +106,35 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px #ffcc00; }
+            100% { box-shadow: 0 0 20px #ff9900; }
+        }
+
+        /* Particles animation */
+        .coin::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 153, 0, 0.5);
+            border-radius: 50%;
+            animation: particleExplosion 1s infinite;
+        }
+
+        @keyframes particleExplosion {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
         }
 
         .counter {
@@ -101,6 +156,12 @@
             width: 0;
             background-color: #76c7c0;
             transition: width 0.5s;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px #76c7c0; }
+            100% { box-shadow: 0 0 20px #76c7c0; }
         }
 
         .timer {
@@ -121,6 +182,12 @@
             border-radius: 10px;
             cursor: pointer;
             width: 30%;
+            transition: transform 0.3s ease;
+        }
+
+        .shop-item:hover {
+            transform: scale(1.05);
+            background-color: #2c2c2c;
         }
 
         .leaderboard {
@@ -139,6 +206,12 @@
         .leaderboard ul {
             list-style: none;
             padding: 0;
+            animation: leaderboardSlide 1s ease-in-out;
+        }
+
+        @keyframes leaderboardSlide {
+            0% { transform: translateY(-20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
         }
 
         .leaderboard li {
@@ -190,7 +263,6 @@
         let farmingInterval;
         const userId = 'user123'; // Replace with dynamic user ID
 
-        // Load saved count from localStorage on page load
         window.onload = function() {
             if (localStorage.getItem('coinCount')) {
                 count = parseInt(localStorage.getItem('coinCount'));
@@ -215,7 +287,7 @@
         }
 
         function startFarming() {
-            const farmingDuration = 10 * 1000; // 10 seconds for demo
+            const farmingDuration = 10 * 1000;
             const farmingAmount = 50;
             const startTime = Date.now();
             const endTime = startTime + farmingDuration;
@@ -240,7 +312,7 @@
             if (remainingTime > 0) {
                 const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
                 document.getElementById('timer').innerText = `Time remaining: 00:00:${seconds.toString().padStart(2, '0')}`;
-                updateProgressBar(remainingTime, 10000); // update progress bar
+                updateProgressBar(remainingTime, 10000);
             } else {
                 document.getElementById('timer').innerText = 'Farming complete!';
             }
@@ -258,8 +330,6 @@
 
         function saveData(clicks) {
             localStorage.setItem('coinCount', clicks);
-
-            // Simulate saving to the server
             console.log('Saved to server:', clicks);
         }
 
