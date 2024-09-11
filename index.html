@@ -17,7 +17,6 @@
             position: relative;
         }
 
-        /* Background animation */
         body::before {
             content: '';
             position: absolute;
@@ -113,60 +112,35 @@
             100% { box-shadow: 0 0 20px #ff9900; }
         }
 
-        /* Particles animation */
-        .coin::before {
-            content: '';
+        .circular-timer {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+
+        .circular-timer .circle-bg {
+            fill: none;
+            stroke: #333;
+            stroke-width: 10;
+        }
+
+        .circular-timer .circle {
+            fill: none;
+            stroke: #76c7c0;
+            stroke-width: 10;
+            stroke-linecap: round;
+            stroke-dasharray: 472;
+            stroke-dashoffset: 472;
+            transition: stroke-dashoffset 0.35s;
+        }
+
+        .circular-timer .time-display {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 50px;
-            height: 50px;
-            background-color: rgba(255, 153, 0, 0.5);
-            border-radius: 50%;
-            animation: particleExplosion 1s infinite;
-        }
-
-        @keyframes particleExplosion {
-            0% {
-                transform: translate(-50%, -50%) scale(0.5);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(2);
-                opacity: 0;
-            }
-        }
-
-        .counter {
+            transform: translate(-50%, -50%);
             font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 20px;
-            background-color: #333;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .progress {
-            height: 100%;
-            width: 0;
-            background-color: #76c7c0;
-            transition: width 0.5s;
-            animation: pulse 1.5s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 10px #76c7c0; }
-            100% { box-shadow: 0 0 20px #76c7c0; }
-        }
-
-        .timer {
-            font-size: 18px;
-            margin-bottom: 20px;
         }
 
         .shop {
@@ -218,6 +192,26 @@
             font-size: 16px;
             margin-bottom: 5px;
         }
+
+        /* New styles for image upload button */
+        .upload-btn {
+            cursor: pointer;
+            background-color: #ffcc00;
+            color: black;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background-color: #ff9900;
+        }
+
+        #fileInput {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -230,17 +224,22 @@
 
     <div class="container">
         <div class="profile">
-            <img src="https://via.placeholder.com/80" alt="Profile">
+            <img src="https://via.placeholder.com/80" alt="Profile" id="profileImage">
             <div>Welcome, Player!</div>
+            <label class="upload-btn" for="fileInput">Upload Profile Image</label>
+            <input type="file" id="fileInput" accept="image/*">
         </div>
 
         <div class="coin" id="coin">💰</div>
         <div class="counter" id="counter">¥ 0</div>
 
-        <div class="progress-bar">
-            <div class="progress" id="progress"></div>
+        <div class="circular-timer">
+            <svg width="150" height="150">
+                <circle class="circle-bg" cx="75" cy="75" r="70"></circle>
+                <circle class="circle" cx="75" cy="75" r="70"></circle>
+            </svg>
+            <div class="time-display" id="timer">00:00</div>
         </div>
-        <div class="timer" id="timer">Time remaining: 00:00:00</div>
 
         <div class="shop">
             <div class="shop-item" onclick="buyMultiplier()">Multiplier (Cost: ¥ 500)</div>
@@ -268,7 +267,26 @@
                 count = parseInt(localStorage.getItem('coinCount'));
                 document.getElementById('counter').innerText = formatNumber(count);
             }
+
+            // Check if a profile image was previously uploaded
+            if (localStorage.getItem('profileImage')) {
+                document.getElementById('profileImage').src = localStorage.getItem('profileImage');
+            }
         };
+
+        // Handle profile image upload
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageUrl = e.target.result;
+                    document.getElementById('profileImage').src = imageUrl;
+                    localStorage.setItem('profileImage', imageUrl); // Save image to localStorage
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
         document.getElementById('coin').addEventListener('click', () => {
             count += 1 * multiplier;
@@ -287,7 +305,7 @@
         }
 
         function startFarming() {
-            const farmingDuration = 10 * 1000;
+            const farmingDuration = 10 * 1000; // 10 seconds for demo
             const farmingAmount = 50;
             const startTime = Date.now();
             const endTime = startTime + farmingDuration;
@@ -311,16 +329,16 @@
 
             if (remainingTime > 0) {
                 const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-                document.getElementById('timer').innerText = `Time remaining: 00:00:${seconds.toString().padStart(2, '0')}`;
-                updateProgressBar(remainingTime, 10000);
+                document.getElementById('timer').innerText = `00:00:${seconds.toString().padStart(2, '0')}`;
+                updateCircularProgressBar(remainingTime, 10000);
             } else {
                 document.getElementById('timer').innerText = 'Farming complete!';
             }
         }
 
-        function updateProgressBar(remainingTime, totalDuration) {
-            const progress = ((totalDuration - remainingTime) / totalDuration) * 100;
-            document.getElementById('progress').style.width = `${progress}%`;
+        function updateCircularProgressBar(remainingTime, totalDuration) {
+            const progress = ((totalDuration - remainingTime) / totalDuration) * 472;
+            document.querySelector('.circle').style.strokeDashoffset = `${472 - progress}`;
         }
 
         function updateUI() {
