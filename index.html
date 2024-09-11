@@ -168,9 +168,8 @@
         let count = 0;
         let multiplier = 1;
         let farmingInterval;
-        const timerDuration = 5 * 60 * 1000; // 5 minutes in milliseconds
-        const username = '@username'; // Replace with dynamic username from server
         let timerEndTime;
+        const timerDuration = 5 * 60 * 1000; // 5 minutes in milliseconds
 
         // Fetch user data from server
         function fetchUserData() {
@@ -187,6 +186,11 @@
                 document.getElementById('username').innerText = `@${data.username}`;
                 document.getElementById('counter').innerText = formatNumber(count);
                 fetchLeaderboard();
+                if (data.timerEndTime) {
+                    timerEndTime = new Date(data.timerEndTime);
+                    updateTimer();
+                    farmingInterval = setInterval(updateTimer, 1000);
+                }
             });
         }
 
@@ -208,7 +212,7 @@
         document.getElementById('coin').addEventListener('click', () => {
             count += 1 * multiplier;
             updateUI();
-            saveData(count);
+            saveData();
         });
 
         function buyMultiplier() {
@@ -216,7 +220,7 @@
                 multiplier *= 2;
                 count -= 500;
                 updateUI();
-                saveData(count);
+                saveData();
             } else {
                 alert("Not enough coins!");
             }
@@ -224,11 +228,7 @@
 
         function startFarming() {
             const startTime = Date.now();
-            timerEndTime = startTime + timerDuration;
-
-            if (localStorage.getItem('timerEndTime')) {
-                timerEndTime = parseInt(localStorage.getItem('timerEndTime'));
-            }
+            timerEndTime = new Date(startTime + timerDuration);
 
             updateTimer();
             farmingInterval = setInterval(updateTimer, 1000);
@@ -248,8 +248,7 @@
                 document.getElementById('timer').innerText = '00:00';
                 count += 50;
                 updateUI();
-                saveData(count);
-                localStorage.removeItem('timerEndTime'); // Clear timer end time
+                saveData();
             }
         }
 
@@ -262,14 +261,18 @@
             document.getElementById('counter').innerText = formatNumber(count);
         }
 
-        function saveData(clicks) {
+        function saveData() {
+            // Replace with actual API endpoint
             fetch('https://api.example.com/updatecoins', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer YOUR_ACCESS_TOKEN' // Replace with actual token
                 },
-                body: JSON.stringify({ coins: clicks })
+                body: JSON.stringify({
+                    coins: count,
+                    timerEndTime: timerEndTime ? timerEndTime.toISOString() : null
+                })
             })
             .then(response => response.json())
             .then(data => {
@@ -294,10 +297,6 @@
         // On page load
         window.onload = function() {
             fetchUserData();
-            if (localStorage.getItem('timerEndTime')) {
-                timerEndTime = parseInt(localStorage.getItem('timerEndTime'));
-                updateTimer();
-            }
         };
     </script>
 </body>
